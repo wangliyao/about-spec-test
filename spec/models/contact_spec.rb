@@ -11,7 +11,7 @@ RSpec.describe Contact, type: :model do
   end
 
   it 'is invalid without lastname' do
-    expect(Contact.new(lastname:nil)).to_not have(1).errors_on(:lastname)
+    expect(Contact.new(lastname:nil)).to have(1).errors_on(:lastname)
   end
 
   it 'is valid with a duplicate email address' do
@@ -56,6 +56,10 @@ RSpec.describe Contact, type: :model do
 
     it 'has a valid Factory' do
       expect(build(:contact)).to be_valid
+    end
+
+    it "hasthreephonenumbers" do
+       expect(create(:contact).phones.count).to eq 3
     end
   end
 end

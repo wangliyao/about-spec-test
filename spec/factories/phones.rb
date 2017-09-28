@@ -1,9 +1,9 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
-
+require'faker'
 FactoryGirl.define do
   factory :phone do
-#    association  :contact
-    phone {'1234567'}
+    association  :contact
+    phone { Faker::PhoneNumber.phone_number }
     phone_type 'home'
 
     factory :home_phone do

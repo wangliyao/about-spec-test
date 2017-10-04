@@ -1,19 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe ContactsController, type: :controller do
-  shared_examples('public acess to contact') do
-    it "assigns the requested contact to @contact" do
-     contact = create(:contact)
-     get :show, id: contact
-     expect(assigns(:contact)).to eq contact
-    end
-    it "renders the :show template" do
-      contact = create(:contact)
-      get :show, id: contact
-      expect(response).to render_template :show
-    end
-  end
-
   describe'GET#show'do
       it_behaves_like "public acess to contact"
    end
@@ -36,7 +23,7 @@ RSpec.describe ContactsController, type: :controller do
    end
 
    describe "GET # NEW" do
-     it "assigns a new Contact to @contact" do
+     it "assigns a new Contact to @contact" ,focus: true do
          get :new
          expect(assigns(:contact)).to be_a_new(Contact)
      end
@@ -96,28 +83,32 @@ RSpec.describe ContactsController, type: :controller do
    end
 
    describe "PATH # update" do
-     before :each do
-       @contact = create(:contact,
-                   firstname:'LHS' ,lastname: "lee")
-     end
+    let(:contact) do
+       create(:contact,
+                 firstname:'LHS' ,lastname: "lee")
+
+    end
+     #let(:contact){build_stubbed(:contact,
+      #                     firstname:'LHs',lastname:'lee')}
+
 
      context "valid attributes" do
        it 'locates the requested @contact' do
-         patch :update ,id: @contact, contact:attributes_for(:contact)
-         expect(assigns(:contact)).to eq(@contact)
+         patch :update ,id: contact, contact:attributes_for(:contact)
+         expect(assigns(:contact)).to eq(contact)
        end
 
        it 'changes @contact attribute' do
-         patch :update ,id: @contact,contact:attributes_for(:contact,
+         patch :update ,id: contact,contact:attributes_for(:contact,
                firstname: 'Larry',lastname: 'Smith')
-         @contact.reload
-         expect(@contact.firstname).to eq("Larry")
-         expect(@contact.lastname).to eq('Smith')
+         contact.reload
+         expect(contact.firstname).to eq("Larry")
+         expect(contact.lastname).to eq('Smith')
        end
 
        it 'redirect to the update contact' do
-         patch :update ,id:@contact,contact:attributes_for(:contact)
-         expect(response).to redirect_to @contact
+         patch :update ,id: contact,contact:attributes_for(:contact)
+         expect(response).to redirect_to contact
        end
      end
    end

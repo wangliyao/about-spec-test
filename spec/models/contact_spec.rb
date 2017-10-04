@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Contact, type: :model do
+   
+
+
   it 'in valid with a firstname,lastname and email' do
 #    contact = Contact.new(
 #       firstname: 'A',
@@ -23,6 +26,9 @@ RSpec.describe Contact, type: :model do
       email: 'tester@gmail.com')
       expect(contact).to_not have(1).errors_on(:email)
   end
+
+    #subject {build(:contact,firstname: 'John',lastname:'Doe')}
+    #it {should name 'John Doe'}
 
   it 'returns a contact full name as a string' do
     contact = Contact.new(firstname: 'John' ,lastname:'Doe', email:'tester@gmail.com')
